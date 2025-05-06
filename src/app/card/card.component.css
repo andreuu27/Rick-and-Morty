@@ -1,0 +1,21 @@
+.container {
+  border: 1px solid lightgrey;
+  border-radius: 8px;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.header {
+  padding: 10px;
+}
+
+.footer {
+  padding: 10px;
+}

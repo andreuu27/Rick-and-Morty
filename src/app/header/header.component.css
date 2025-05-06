@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 2px 10px;
-  background-color: #f8f9fa;
+  background-color: white;
 }
 
 .logo {
@@ -12,19 +12,19 @@
 
 .nav-buttons {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
   list-style: none;
 }
 
-.link {
-  border: 1px solid blue;
+li {
+  border: 1px solid greenyellow;
   border-radius: 8px;
   padding: 10px;
 }
 
-.link:hover {
-  background-color: lightblue;
-  color: blue;
+li:hover {
+  background-color: rgb(170, 240, 170);
+  color: black;
   transition: all 0.3s ease;
 }

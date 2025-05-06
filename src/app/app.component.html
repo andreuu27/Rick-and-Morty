@@ -1,2 +1,14 @@
 <app-header></app-header>
-<router-outlet></router-outlet>
+
+<div class="search-bar-container">
+  <app-search-bar></app-search-bar>
+</div>
+
+<div class="card-container">
+  <ng-container *ngFor="let character of characters">
+    <app-card
+      [headerTitle]="character.name"
+      [footerText]="character.status"
+    ></app-card>
+  </ng-container>
+</div>

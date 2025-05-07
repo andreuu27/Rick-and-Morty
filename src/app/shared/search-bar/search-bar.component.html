@@ -1,4 +1,8 @@
 <form class="form">
-  <input class="input" />
-  <button class="button">Search</button>
+  <input
+    [(ngModel)]="searchValue"
+    [ngModelOptions]="{ standalone: true }"
+    class="input"
+  />
+  <button class="button" (click)="onSearch()">Search</button>
 </form>

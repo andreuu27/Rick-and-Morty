@@ -1,0 +1,55 @@
+/* Contenedor de tarjetas: grid o flex */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Estilo base de cada tarjeta */
+.card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover: levantamiento y sombra más intensa */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Título */
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+/* Texto de pie (status) */
+.card p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+/* Estado “Alive” vs “Dead” con color */
+.card p {
+  font-weight: bold;
+}
+.card p:contains("Alive") {
+  color: #28a745; /* verde */
+}
+.card p:contains("Dead") {
+  color: #dc3545; /* rojo */
+}
+
+.card.alive p {
+  color: #28a745;
+}
+.card.dead p {
+  color: #dc3545;
+}

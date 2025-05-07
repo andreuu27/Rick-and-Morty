@@ -3,3 +3,9 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}

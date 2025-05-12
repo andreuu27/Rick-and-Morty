@@ -64,5 +64,5 @@ export class CharactersComponent {
     character.name.toLowerCase().includes(searchText.toLowerCase())
   );
   console.log('Filtered characters:', this.filteredCharacters);
-}
+  }
 }

@@ -3,6 +3,7 @@
     <app-card
       [headerTitle]="character.name"
       [footerText]="character.status"
+      (favoriteClick)="onFavoriteClick(character)"
     ></app-card>
   </ng-container>
 </div>

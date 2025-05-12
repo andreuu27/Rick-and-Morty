@@ -4,5 +4,7 @@
     <ng-content></ng-content>
   </div>
   <div class="footer">{{ footerText }}</div>
-  <button>Add to favorites</button>
+  <button class="favorites-button" (click)="(onFavoriteClick)">
+    Add to favorites
+  </button>
 </div>

@@ -19,8 +19,11 @@ interface Character {
 })
 
 export class CharactersComponent {
-  protected characters: Character[] = [
+  protected filteredCharacters: Character[] = [];
+  private _characters: Character[];
 
+  constructor(private _filterService: FilterService) { 
+    this._characters = [
     { id: 1, name: 'Rick Sanchez', status: 'Alive' },
     { id: 2, name: 'Morty Smith', status: 'Alive' },
     { id: 3, name: 'Summer Smith', status: 'Alive' },
@@ -42,21 +45,24 @@ export class CharactersComponent {
     { id: 19, name: 'Squanchy', status: 'Alive' },
     { id: 20, name: 'Tammy Gueterman', status: 'Dead' }
   ];
-
-  protected filteredCharacters: Character[] = [];
-
-  constructor(private _filterService: FilterService) { 
-    this.filteredCharacters = [...this.characters];
+    // Initialize filteredCharacters with all characters
+    this.filteredCharacters = [...this._characters];
 
     this._filterService.searchText.subscribe({
-      next: (value: string) => {
-        const term = value.trim().toLowerCase();
-        this.filteredCharacters = term 
-          ? this.characters.filter(character =>
-              character.name.toLowerCase().includes(term)
-            )
-          : [...this.characters];
-      }
-    });
+      next: this.onSearchText, 
+  });
+ }
+  private onSearchText = (searchText: string): void => {
+    console.log('Search text received:', searchText);
+
+  if (!searchText.trim()) {
+    this.filteredCharacters = [...this._characters];
+    return;
   }
+
+  this.filteredCharacters = this._characters.filter((character) =>
+    character.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+  console.log('Filtered characters:', this.filteredCharacters);
+}
 }

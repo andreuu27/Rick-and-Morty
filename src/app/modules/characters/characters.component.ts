@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FilterService } from '../../core/services/filter/filter.service';
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { map } from 'rxjs';
 
 interface Character {
   id: number;
@@ -20,11 +21,13 @@ interface Character {
 export class CharactersComponent implements OnInit {
   protected filteredCharacters: Character[];
   protected favoriteCharacterIds: number[];
+  protected favoriteCharacters: Character[];
 
   constructor(private _filterService: FilterService) {
     // Initialize filtered characters with all characters
     this.filteredCharacters = [];
     this.favoriteCharacterIds = [];
+    this.favoriteCharacters = [];
   }
 
   ngOnInit(): void {
@@ -34,7 +37,7 @@ export class CharactersComponent implements OnInit {
       },
     });
 
-    this._filterService.favoriteCharacters.subscribe({
+    this._filterService.favoriteCharactersIds.subscribe({
       next: (favoriteIds: number []) => {
         this.favoriteCharacterIds = favoriteIds;
       },

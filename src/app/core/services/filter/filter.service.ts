@@ -11,12 +11,12 @@ export interface Character {
 })
 
 export class FilterService {
-  private _favoriteCharacters: BehaviorSubject<number[]>;
+  private _favoriteCharactersIds: BehaviorSubject<number[]>;
   private _characters: Character[];
   private _searchText: BehaviorSubject<string>;
 
   constructor(){
-  this._favoriteCharacters = new BehaviorSubject<number[]>([]);  
+  this._favoriteCharactersIds = new BehaviorSubject<number[]>([]);  
   this._characters = [
 
     { id: 1, name: 'Rick Sanchez', status: 'Alive' },
@@ -39,8 +39,8 @@ export class FilterService {
   this._searchText = new BehaviorSubject<string>('');
 
   }
-get favoriteCharacters(): Observable<number[]> {
-    return this._favoriteCharacters;
+get favoriteCharactersIds(): Observable<number[]> {
+    return this._favoriteCharactersIds;
   }
 
   set searchText(value: string) {
@@ -61,8 +61,21 @@ get favoriteCharacters(): Observable<number[]> {
     );
   }
 
+  get favoriteCharacters(): Observable<Character[]> {
+    return this._favoriteCharactersIds.pipe(
+      map((favoriteCharacterIds: number[]) => {
+        const favoriteCharacters: Character[] = [];
+
+        for
+      }
+    }
+    return favoriteCharacters;
+
+  }),
+);
+}
   toggleFavorite(characterId: number): void {
-    const currentFavorites = this._favoriteCharacters.getValue();
+    const currentFavorites = this._favoriteCharactersIds.getValue();
 
     const index = currentFavorites.findIndex(
       (id: number) => id === characterId,
@@ -74,7 +87,7 @@ get favoriteCharacters(): Observable<number[]> {
       currentFavorites.splice(index, 1);
     }
 
-    this._favoriteCharacters.next(currentFavorites);
+    this._favoriteCharactersIds.next(currentFavorites);
   }
 }
 // Este servicio gestiona el filtrado y el estado de favoritos de los personajes.

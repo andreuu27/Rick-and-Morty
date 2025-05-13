@@ -8,3 +8,14 @@
     ></app-card>
   </ng-container>
 </div>
+
+<div>
+  <ng-container *ngFor="let character of filteredCharacters">
+    <app-card
+      [headerTitle]="character.name"
+      [footerText]="character.status"
+      [isFavorite]="favoriteCharacterIds.includes(character.id)"
+      (favoriteClick)="onFavoriteClick(character)"
+    ></app-card>
+  </ng-container>
+</div>

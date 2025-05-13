@@ -12,16 +12,17 @@ export class CardComponent {
   @Input() footerText: string;
   @Input() isFavorite: boolean;
 
-  @Output() favoriteClick: EventEmitter<void> = new EventEmitter<void>();
+  @Output() favoriteClick: EventEmitter<void>;
 
   constructor() {
     this.headerTitle = 'Default Header';
     this.footerText = 'Default Footer';
     this.isFavorite = false;
+
+    this.favoriteClick = new EventEmitter<void>();
   }
 
   onFavoriteClick(): void {
     this.favoriteClick.emit();
   }
-
 }

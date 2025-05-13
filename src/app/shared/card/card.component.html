@@ -1,10 +1,12 @@
 <div class="container">
-  <div class="header">{{ headerTitle }}</div>
+  <div class="header">
+    <span>{{ headerTitle }}</span>
+  </div>
   <div class="content">
     <ng-content></ng-content>
   </div>
   <div class="footer">{{ footerText }}</div>
-  <button class="favorites-button" (click)="(onFavoriteClick)">
-    Add to favorites
+  <button class="favorites-button" (click)="onFavoriteClick()">
+    @if (!isFavorite) { Add to favorites } @else { Remove from favorites }
   </button>
 </div>

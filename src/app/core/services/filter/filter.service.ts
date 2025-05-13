@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 
+export interface Character {
+  id: number;
+  name: string;
+  status: string;
+}
 @Injectable({
   providedIn: 'root'
 })
 
 export class FilterService {
-  }
+  private _favoriteCharacters: BehaviorSubject<number[]>;
   private _characters: Character[];
-
   private _searchText: BehaviorSubject<string>;
 
   constructor(){
-  this._searchText = new BehaviorSubject<string>(''); 
+  this._favoriteCharacters = new BehaviorSubject<number[]>([]);  
+  this._characters = [
 
-    this._characters = [
     { id: 1, name: 'Rick Sanchez', status: 'Alive' },
     { id: 2, name: 'Morty Smith', status: 'Alive' },
     { id: 3, name: 'Summer Smith', status: 'Alive' },
@@ -36,31 +40,51 @@ export class FilterService {
     { id: 19, name: 'Squanchy', status: 'Alive' },
     { id: 20, name: 'Tammy Gueterman', status: 'Dead' }
   ];
-} 
 
-get characters(): Character[] {
-  return this._characters;
-}
-get searchText(): Subject<string> {
-  return this._searchText;
-}
-set searchText(value: string) {
-  this._searchText.next(value);
-}
+  this._searchText = new BehaviorSubject<string>('');
 
-get filteredCharacters(): Observable<Character[]> {
-  return this._searchText.pipe(
-    map((searchText: string) => {
-      const filteredCharacters = this._characters.filter(
-        (character: Character) => {
-          return character.name
-            .toLowerCase()
-            .includes(searchText.toLowerCase());
-        },
-      );
+  }
+get favoriteCharacters(): Observable<number[]> {
+    return this._favoriteCharacters;
+  }
 
-      return filteredCharacters;
-    }),
-  );
+  set searchText(value: string) {
+    this._searchText.next(value);
+  }
+
+  get searchText(): Observable<string> {
+    return this._searchText;
+  }
+
+  get filteredCharacters(): Observable<Character[]> {
+    return this._searchText.pipe(
+      map((searchText: string) => {
+        return this._characters.filter((character) =>
+          character.name.toLowerCase().includes(searchText.toLowerCase()),
+        );
+      }),
+    );
+  }
+
+  toggleFavorite(characterId: number): void {
+    const currentFavorites = this._favoriteCharacters.getValue();
+
+    const index = currentFavorites.findIndex(
+      (id: number) => id === characterId,
+    );
+
+    if (index === -1) {
+      currentFavorites.push(characterId);
+    } else {
+      currentFavorites.splice(index, 1);
+    }
+
+    this._favoriteCharacters.next(currentFavorites);
+  }
 }
-}
+// Este servicio gestiona el filtrado y el estado de favoritos de los personajes.
+// Utiliza BehaviorSubject para mantener un registro del estado actual de los caracteres favoritos y del texto de búsqueda.
+// El observable filteredCharacters emite la lista de personajes basada en el texto de búsqueda actual.
+// El método toggleFavorite actualiza la lista de caracteres favoritos cuando un carácter se marca como favorito o no favorito.
+// La propiedad searchText permite establecer el texto de búsqueda, que actualizará automáticamente los caracteres filtrados.
+// La propiedad favoriteCharacters devuelve un observable de la lista actual de IDs de personajes favoritos.

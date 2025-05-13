@@ -33,12 +33,7 @@ export class FilterService {
     { id: 12, name: 'Mr. Poopybutthole', status: 'Alive' },
     { id: 13, name: 'Noob-Noob', status: 'Alive' },
     { id: 14, name: 'Unity', status: 'Alive' },
-    { id: 15, name: 'Birdperson', status: 'Dead' },
-    { id: 16, name: 'Mr. Meeseeks', status: 'Dead' },
-    { id: 17, name: 'Evil Morty', status: 'Alive' },
-    { id: 18, name: 'Jerry Smith', status: 'Alive' },
-    { id: 19, name: 'Squanchy', status: 'Alive' },
-    { id: 20, name: 'Tammy Gueterman', status: 'Dead' }
+
   ];
 
   this._searchText = new BehaviorSubject<string>('');

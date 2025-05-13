@@ -1,9 +1,8 @@
-import { CardComponent } from '../../shared/card/card.component';
+import { CardComponent } from '../../../../shared/card/card.component';
 import { CommonModule } from '@angular/common';
-import { FilterService } from '../../core/services/filter/filter.service';
-import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { map } from 'rxjs';
+import { FilterService } from '../../../../core/services/filter/filter.service';
+import { Component, OnInit } from '@angular/core';
+
 
 interface Character {
   id: number;
@@ -37,13 +36,26 @@ export class CharactersComponent implements OnInit {
       },
     });
 
-    this._filterService.favoriteCharactersIds.subscribe({
-      next: (favoriteIds: number []) => {
-        this.favoriteCharacterIds = favoriteIds;
+    const characters: Character[] = [];
+
+      this._filterService.favoriteCharactersIds.subscribe({
+       next: (favoriteCharacterId: number []) => {
+         for (const character of characters) {
+           if (favoriteCharacterId.includes(character.id)) {
+         this.favoriteCharacters.push(character);
+        }
+       }
+      },
+    });
+
+    this._filterService.favoriteCharacters.subscribe({
+      next: (favoriteCharacters: Character[]) => {
+        this.favoriteCharacters = favoriteCharacters;
       },
     });
   }
-    protected onFavoriteClick(character: Character): void {
-     this._filterService.toggleFavorite(character.id);
-    }
- }
+
+  protected onFavoriteClick(character: Character): void {
+    this._filterService.toggleFavorite(character.id);
+  }
+}

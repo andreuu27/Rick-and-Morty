@@ -8,16 +8,16 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './search-bar.component.css'
 })
 export class SearchBarComponent {
-@Output() searchText: EventEmitter<string>
+  @Output() searchText: EventEmitter<string>
 
-protected searchValue: string;
+  protected searchValue: string;
 
-constructor() {
-  this.searchValue = '';
-  this.searchText = new EventEmitter<string>();
-}
+  constructor() {
+    this.searchValue = '';
+    this.searchText = new EventEmitter<string>();
+  }
 
-protected onSearch(){
-  this.searchText.emit(this.searchValue);
-}
+  protected onSearch(){
+   this.searchText.emit(this.searchValue);
+  }
 }

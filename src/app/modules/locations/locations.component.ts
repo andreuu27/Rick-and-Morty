@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { CardComponent } from '../../shared/card/card.component';
 import { FilterService } from '../../core/services/filter/filter.service';
-import { OnInit } from '@angular/core';
 
 interface Location {
   id: number;
@@ -16,7 +15,7 @@ interface Location {
   templateUrl: './locations.component.html',
   styleUrl: './locations.component.css'
 })
-export class LocationsComponent implements OnInit {
+export class LocationsComponent {
 protected locations: Location[] = [
     {
       id: 1,
@@ -50,10 +49,13 @@ protected locations: Location[] = [
     },
   ];
 
-  constructor(private _filterService: FilterService) { }
-
-  ngOnInit(): void {
-    console.log(this._filterService.searchText);
+  constructor(private _filterService: FilterService) {
+    this._filterService.searchText.subscribe({
+      next: (value: string) => {
+        console.log(value);
+        // Logic I want to run when a new value is emitted
+      },
+    });
   }
 }
   

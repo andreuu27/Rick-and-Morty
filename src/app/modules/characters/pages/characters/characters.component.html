@@ -9,7 +9,8 @@
   </ng-container>
 </div>
 
-<div>
+<h2>Favorite Characters</h2>
+<div class="card-container">
   <ng-container *ngFor="let character of filteredCharacters">
     <app-card
       [headerTitle]="character.name"

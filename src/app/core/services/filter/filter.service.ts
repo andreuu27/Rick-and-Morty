@@ -33,22 +33,24 @@ export class FilterService {
     { id: 12, name: 'Mr. Poopybutthole', status: 'Alive' },
     { id: 13, name: 'Noob-Noob', status: 'Alive' },
     { id: 14, name: 'Unity', status: 'Alive' },
-
   ];
 
   this._searchText = new BehaviorSubject<string>('');
-
   }
-get favoriteCharactersIds(): Observable<number[]> {
+  
+  get favoriteCharactersIds(): Observable<number[]> {
     return this._favoriteCharactersIds;
+
   }
 
   set searchText(value: string) {
     this._searchText.next(value);
+
   }
 
   get searchText(): Observable<string> {
     return this._searchText;
+
   }
 
   get filteredCharacters(): Observable<Character[]> {
@@ -66,14 +68,17 @@ get favoriteCharactersIds(): Observable<number[]> {
       map((favoriteCharacterIds: number[]) => {
         const favoriteCharacters: Character[] = [];
 
-        for
-      }
-    }
-    return favoriteCharacters;
+        for (const character of this._characters) {
+          if (favoriteCharacterIds.includes(character.id)) {
+            favoriteCharacters.push(character);
+          }
+        }
 
-  }),
-);
-}
+        return favoriteCharacters;
+      }),
+    );
+  }
+
   toggleFavorite(characterId: number): void {
     const currentFavorites = this._favoriteCharactersIds.getValue();
 
@@ -90,6 +95,7 @@ get favoriteCharactersIds(): Observable<number[]> {
     this._favoriteCharactersIds.next(currentFavorites);
   }
 }
+
 // Este servicio gestiona el filtrado y el estado de favoritos de los personajes.
 // Utiliza BehaviorSubject para mantener un registro del estado actual de los caracteres favoritos y del texto de búsqueda.
 // El observable filteredCharacters emite la lista de personajes basada en el texto de búsqueda actual.

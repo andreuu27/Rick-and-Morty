@@ -9,7 +9,8 @@ export const routes: Routes = [
   {
     path: 'characters',
     loadComponent: () =>
-      import('./modules/characters/characters-layout.component').then(
+      import(
+        './modules/characters/characters-layout.component').then(
         (m) => m.CharactersLayoutComponent,
       ),
     children: [

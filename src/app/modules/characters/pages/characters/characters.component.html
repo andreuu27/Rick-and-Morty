@@ -11,7 +11,7 @@
 
 <h2>Favorite Characters</h2>
 <div class="card-container">
-  <ng-container *ngFor="let character of filteredCharacters">
+  <ng-container *ngFor="let character of favoriteCharacters">
     <app-card
       [headerTitle]="character.name"
       [footerText]="character.status"

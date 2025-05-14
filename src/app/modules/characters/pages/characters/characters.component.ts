@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FilterService } from '../../../../core/services/filter/filter.service';
 import { Component, OnInit } from '@angular/core';
 
-
 interface Character {
   id: number;
   name: string;
@@ -30,6 +29,12 @@ export class CharactersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._filterService.fetchCharacters().subscribe({
+      next: (characters: Character[]) => {
+        console.log('Characters fetched:', characters);
+      },
+    }),
+
     this._filterService.filteredCharacters.subscribe({
       next: (characters: Character[]) => {
         this.filteredCharacters = characters;

@@ -6,6 +6,13 @@ export interface Character {
     type: string;
     gender: string;
     origin: RelatedEntityInfo;
-    
-
+    location: RelatedEntityInfo;
+    image: string;
+    episode: string[];
+    url: string;
+    created: string;
+} 
+export interface RelatedEntityInfo {
+    name: string;
+    url: string;
 }

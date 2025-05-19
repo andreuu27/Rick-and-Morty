@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Character } from '../../../modules/characters/models/character.model';
+import { CharacterApiPageResponse } from '../../../modules/characters/models/character-api-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,15 @@ export class FilterService {
 
   }
 
+  getCharacterById(id: number): Character | null {
+    for (const character of this._characters) {
+      if (character.id === id) {
+        return character;
+      }
+    }
+    return null;
+   }
+
   get filteredCharacters(): Observable<Character[]> {
     return this._searchText.pipe(
       map((searchText: string) => {
@@ -60,10 +70,17 @@ export class FilterService {
     );
   }
 
-  fetchCharacters(): Observable<Character[]> {
-    return this._http.get<Character[]>("https://rickandmortyapi.com/api/character");
-  }
-
+  loadCharacters(): void {
+    this.fetchCharacters().subscribe({
+      next: (characters: Character[]) => {
+        this._characters = characters;
+      },
+      error: (error) => {
+        console.error('Error fetching characters:', error);
+      },
+    });
+ }
+ 
   toggleFavorite(characterId: number): void {
     const currentFavorites = this._favoriteCharactersIds.getValue();
 
@@ -79,16 +96,18 @@ export class FilterService {
 
     this._favoriteCharactersIds.next(currentFavorites);
   }
+  private _fetchCharactersPage(): Observable<CharacterApiPageResponse> {
+    return this._http.get<CharacterApiPageResponse>("https://rickandmortyapi.com/api/character",
+  );
+  }
 
-  getCharacterById(id: number): Character | null {
-    for (const character of this._characters) {
-      if (character.id === id) {
-        return character;
-      }
-    }
-    return null;
-   }
-}
+  private _fetchCharacters(): Observable<Character[]> {
+    return this._fetchCharactersPage().pipe(
+      map((response: CharacterApiPageResponse) => {
+        return response.results;
+      }),
+    );
+  }
 
 // Este servicio gestiona el filtrado y el estado de favoritos de los personajes.
 // Utiliza BehaviorSubject para mantener un registro del estado actual de los caracteres favoritos y del texto de búsqueda.

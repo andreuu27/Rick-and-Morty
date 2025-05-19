@@ -2,14 +2,9 @@ import { CardComponent } from '../../../../shared/card/card.component';
 import { CommonModule } from '@angular/common';
 import { FilterService } from '../../../../core/services/filter/filter.service';
 import { Component, OnInit } from '@angular/core';
+import { Character } from '../../../characters/models/character.model';
 
-interface Character {
-  id: number;
-  name: string;
-  status: string;
-
-}
-@Component({
+@Component({ 
   selector: 'app-characters',
   imports: [CardComponent, CommonModule],
   templateUrl: './characters.component.html',
@@ -29,12 +24,8 @@ export class CharactersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._filterService.fetchCharacters().subscribe({
-      next: (characters: Character[]) => {
-        console.log('Characters fetched:', characters);
-      },
-    }),
-
+    this._filterService.loadCharacters();
+    
     this._filterService.filteredCharacters.subscribe({
       next: (characters: Character[]) => {
         this.filteredCharacters = characters;
